@@ -34,7 +34,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: password
     ports:
-      - "33061:33061"
+      - "33061:3306"
     volumes:
       - db_data:/var/lib/mysql
 
