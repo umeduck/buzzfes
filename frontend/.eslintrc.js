@@ -6,7 +6,7 @@ module.exports = {
     sourceType: "module",
   },
   extends: [
-    "plugin:vue/vue3-recommended",
+    "plugin:vue/vue3-essential",
     "eslint:recommended",
   ],
 }
