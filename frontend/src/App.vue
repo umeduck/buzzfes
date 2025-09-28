@@ -1,13 +1,17 @@
 <template>
   <v-app>
+    <AppHeader />
     <router-view />
   </v-app>
 </template>
 
 <script>
-
+import { defineAsyncComponent } from 'vue'
 export default {
   name: 'App',
+  components: {
+    AppHeader: defineAsyncComponent(() => import('./components/AppHeader.vue'))
+  }
 }
 </script>
 
