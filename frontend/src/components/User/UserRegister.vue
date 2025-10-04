@@ -65,9 +65,11 @@ const submitLogin = () => {
   const data = {
     name: login.value.name,
     email: login.value.email,
-    password_digest: login.value.password
+    password: login.value.password,
+    password_confirmation: login.value.password
   }
-  axios.post("http://localhost:3000/users",data)
+  console.log(data)
+  axios.post("http://localhost:3000/auth",data)
   .then(response => {
     console.log(response.data)
   })

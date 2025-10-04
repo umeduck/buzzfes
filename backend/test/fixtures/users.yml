@@ -4,7 +4,7 @@ one:
   name: MyString
   email: MyString
   role: 1
-  password_digest: MyString
+  encrypted_password: MyString
   lock_version: 1
   activated_at: 2025-09-20 02:04:52
   deleted_at: 2025-09-20 02:04:52
@@ -13,7 +13,7 @@ two:
   name: MyString
   email: MyString
   role: 1
-  password_digest: MyString
+  encrypted_password: MyString
   lock_version: 1
   activated_at: 2025-09-20 02:04:52
   deleted_at: 2025-09-20 02:04:52
