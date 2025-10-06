@@ -82,14 +82,15 @@ const submitLogin = () => {
     name: login.value.name,
     email: login.value.email,
     password: login.value.password,
-    password_confirmation: login.value.password
+    password_confirmation: login.value.password,
+    confirm_success_url: `http://localhost:8080`
   }
   console.log(data)
   axios.post("http://localhost:3000/auth",data)
   .then(response => {
     console.log(response.data)
     isDialogOpen.value = false
-    snackbar.value = { visible: true, message: "新規登録完了しました。", color: 'success' }
+    snackbar.value = { visible: true, message: "確認メールを送付しました。", color: 'success' }
   })
   .catch(error => {
     if (error.response) {

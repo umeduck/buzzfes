@@ -17,6 +17,9 @@ gem 'devise_token_auth'
 
 gem 'rails-i18n'
 
+gem 'letter_opener'
+gem 'letter_opener_web'
+
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
 
