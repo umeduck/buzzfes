@@ -10,8 +10,16 @@
     <v-spacer></v-spacer>
     <v-btn text>ランキング</v-btn>
     <v-btn text>投稿</v-btn>
-    <Register />
-    <Login />
+    <Register v-if="!auth.isLoggedIn" />
+    <Login v-if="!auth.isLoggedIn" />
+    <v-btn
+      v-if="auth.isLoggedIn"
+      @click="logout"
+      variant="outlined"
+      color="grey"
+    >
+    ログアウト
+    </v-btn>
   </v-app-bar>
 
   <!-- ヘッダー (モバイル表示) -->
@@ -32,4 +40,18 @@
 <script setup>
 import Login from '@/components/User/UserLogin.vue'
 import Register from '@/components/User/UserRegister.vue'
+import api from '@/plugins/axios'
+import { useAuthStore } from '@/stores/auth'
+
+const auth = useAuthStore()
+
+const logout = () => {
+  api.delete("http://localhost:3000/auth/sign_out")
+  .then(
+    auth.logout()
+  )
+  .catch(error => {
+    console.error("Logout error:", error)
+  })
+}
 </script>

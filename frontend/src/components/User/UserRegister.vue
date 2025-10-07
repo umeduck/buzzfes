@@ -57,7 +57,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios from '@/plugins/axios'
+import api from '@/plugins/axios'
 
 // ダイアログの開閉状態
 const isDialogOpen = ref(false) 
@@ -86,7 +86,7 @@ const submitLogin = () => {
     confirm_success_url: `http://localhost:8080`
   }
   console.log(data)
-  axios.post("http://localhost:3000/auth",data)
+  api.post("http://localhost:3000/auth",data)
   .then(response => {
     console.log(response.data)
     isDialogOpen.value = false
