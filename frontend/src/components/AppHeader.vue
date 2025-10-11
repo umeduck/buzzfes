@@ -8,8 +8,8 @@
   >
     <v-img :src="require('@/assets/logo.png')" />
     <v-spacer></v-spacer>
-    <v-btn text>ランキング</v-btn>
-    <v-btn text>投稿</v-btn>
+    <v-btn text to="/">トップ</v-btn>
+    <v-btn text to="/themes">お題一覧</v-btn>
     <Register v-if="!auth.isLoggedIn" />
     <Login v-if="!auth.isLoggedIn" />
     <v-btn

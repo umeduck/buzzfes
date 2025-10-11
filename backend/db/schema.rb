@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_04_073230) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_11_014746) do
+  create_table "themes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "title", null: false
+    t.text "description", null: false
+    t.datetime "start_at", null: false
+    t.datetime "end_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false, comment: "ユーザー名"
     t.string "email", null: false, comment: "メールアドレス"
