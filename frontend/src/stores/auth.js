@@ -12,7 +12,7 @@ export const useAuthStore = defineStore('auth', {
   },
   actions: {
     setAuthHeaders(headers) {
-      console.log(headers['uid'])
+      this.client = headers['client'];
       this.uid = headers['uid'];
       this.accessToken = headers['access-token'];
       this.expiry = headers['expiry'];
