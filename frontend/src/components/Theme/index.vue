@@ -9,7 +9,7 @@
               <v-card-text class="text-center">
                 <h3 class="text-h6 font-weight-bold mb-4">{{ n.title }}</h3>
                 <p class="mb-4">{{ n.description }}</p>
-                <v-btn color="blue-darken-3" dark rounded>参加する</v-btn>
+                <v-btn color="blue-darken-3" :to="`/posts/${n.id}`">参加する</v-btn>
               </v-card-text>
             </v-card>
           </v-col>
@@ -26,7 +26,6 @@ const temeas = ref([])
 
 const getTemes = async () => {
   // ここでAPIからお題データを取得する処理を実装
-  console.log('お題データを取得')
   api.get("http://localhost:3000/themes")
   .then(response => {
     temeas.value = response.data

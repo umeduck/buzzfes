@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_10_11_014746) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_11_024701) do
+  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "theme_id", null: false
+    t.bigint "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["theme_id"], name: "index_posts_on_theme_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
   create_table "themes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.text "title", null: false
     t.text "description", null: false
@@ -44,4 +54,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_10_11_014746) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "posts", "themes"
+  add_foreign_key "posts", "users"
 end

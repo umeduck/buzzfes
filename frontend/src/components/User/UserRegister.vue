@@ -85,10 +85,8 @@ const submitLogin = () => {
     password_confirmation: login.value.password,
     confirm_success_url: `http://localhost:8080`
   }
-  console.log(data)
   api.post("http://localhost:3000/auth",data)
-  .then(response => {
-    console.log(response.data)
+  .then(() => {
     isDialogOpen.value = false
     snackbar.value = { visible: true, message: "確認メールを送付しました。", color: 'success' }
   })
