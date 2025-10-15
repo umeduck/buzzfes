@@ -24,5 +24,14 @@ export const useAuthStore = defineStore('auth', {
       this.expiry = null
       localStorage.removeItem('auth')
     }
-  }
+  },
+  persist: {
+    enabled: true,
+    strategies: [
+      {
+        storage: localStorage,
+        paths: ['uid', 'client', 'accessToken', 'expiry', 'isLoggedIn'],
+      },
+    ],
+  },
 });
