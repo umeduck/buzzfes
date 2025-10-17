@@ -1,5 +1,5 @@
 <template>
-    <v-dialog max-width="500" v-model = "isDialogOpen">
+  <v-dialog max-width="500" v-model = "isDialogOpen">
     <template v-slot:activator="{ props: activatorProps }">
       <v-btn
         v-bind="activatorProps"
@@ -50,17 +50,16 @@
       </v-card>
     </template>
   </v-dialog>
-  <v-snackbar v-model="snackbar.visible" :color="snackbar.color" timeout="3000" location="top">
-  {{ snackbar.message }}
-</v-snackbar>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import api from '@/plugins/axios'
+import { rules } from '@/stores/formRules'
+import { useNotificationStore } from '@/stores/notification'
 
 // ダイアログの開閉状態
-const isDialogOpen = ref(false) 
+const isDialogOpen = ref(false)
 
 // フォームデータ
 const login = ref({ name: '', email: '', password: '' })
@@ -68,14 +67,8 @@ const login = ref({ name: '', email: '', password: '' })
 // フォームのバリデーション状態
 const isValid = ref(false)
 
-// バリデーションルール
-const rules = {
-  required: v => !!v || '必須項目です',
-  email: v => /.+@.+\..+/.test(v) || 'メール形式で入力してください',
-  min: l => v => (v && v.length >= l) || `${l}文字以上で入力してください`
-}
-// アラートメッセージ
-const snackbar = ref('')
+// お知らせアラート
+const notify = useNotificationStore()
 
 const submitLogin = () => {
   const data = {
@@ -88,7 +81,7 @@ const submitLogin = () => {
   api.post("http://localhost:3000/auth",data)
   .then(() => {
     isDialogOpen.value = false
-    snackbar.value = { visible: true, message: "確認メールを送付しました。", color: 'success' }
+    notify.notify('確認メールを送付しました。', 'success')
   })
   .catch(error => {
     if (error.response) {
@@ -97,14 +90,14 @@ const submitLogin = () => {
       if (status === 422 && error.response.data.errors) {
         // バリデーションエラー
         const messages = error.response.data.errors.full_messages
-        snackbar.value = { visible: true, message: messages, color: 'error' }
+        notify.notify(messages, 'error')
       } else {
         // その他のエラー
-        snackbar.value = { visible: true, message: "システムエラーが発生しました。時間をおいて再度お試しください。", color: 'error' }
+        notify.notify("システムエラーが発生しました", 'error')
       }
     } else {
       // ネットワークエラーやサーバー無応答
-      snackbar.value = { visible: true, message: "サーバーに接続できませんでした。ネットワークを確認してください。", color: 'error' }
+      notify.notify("サーバーに接続ができませんでした。", 'error')
     }
   })
 }
