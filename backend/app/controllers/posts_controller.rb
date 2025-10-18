@@ -3,7 +3,6 @@ class PostsController < ApplicationController
   before_action :authenticate_user!, only: %i[ create update destroy]
   # GET /posts
   def index
-    AppLogger.info "Headers:"
     posts = Post.where(theme_id: params[:theme_id]).where.not(user_id: current_user&.id)
     my_post = Post.find_by(theme_id: params[:theme_id], user_id: current_user&.id)
     render json: {posts: posts, my_post: my_post}
@@ -16,6 +15,10 @@ class PostsController < ApplicationController
 
   # POST /posts
   def create
+    if Post.exists?(theme_id: post_params[:theme_id], user_id: current_user.id)
+      render json: { error: 'すでに投稿しています。※1つのお題につき投稿は1つまでとなります。' }, status: :conflict
+      return
+    end
     @post = Post.new(post_params)
 
     if @post.save
@@ -27,6 +30,10 @@ class PostsController < ApplicationController
 
   # PATCH/PUT /posts/1
   def update
+    if @post.user_id != current_user.id
+      render json: { error: '他のユーザーの投稿は編集できません。' }, status: :forbidden
+      return
+    end
     if @post.update(post_params)
       render json: @post
     else
@@ -47,6 +54,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:theme_id, :user_id, :content)
+      params.permit(:theme_id, :title, :content).merge(user_id: current_user.id)
     end
 end

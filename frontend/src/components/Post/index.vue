@@ -8,7 +8,12 @@
               <h3 class="text-h6 font-weight-bold mb-4">お題：{{ theme.title }}</h3>
               <p>{{ theme.description }}</p>
               <div v-if="auth.isLoggedIn">
-                <v-btn color="blue-darken-3" dark rounded>投稿する</v-btn>
+                <div v-if="my_post">
+                  <v-btn color="blue-darken-3" dark rounded :to="`/post/edit/${theme.id}/${my_post.id}`">自分の投稿</v-btn>
+                </div>
+                <div v-else>
+                  <v-btn color="blue-darken-3" dark rounded :to="`/post/create/${theme.id}`">投稿する</v-btn>
+                </div>
               </div>
               <div v-else>
                 <v-btn color="grey-darken-3" dark rounded disable>投稿にはログインが必要です</v-btn>
