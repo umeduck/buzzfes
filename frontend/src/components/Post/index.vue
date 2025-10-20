@@ -28,7 +28,7 @@
               <v-card-text class="text-center">
                 <h3 class="text-h6 font-weight-bold mb-4">{{ n.title }}</h3>
                 <p class="mb-4">{{ n.content }}</p>
-                <v-btn color="blue-darken-3" dark rounded>詳細を見る</v-btn>
+                <v-btn color="blue-darken-3" dark rounded :to="`/post/${n.id}`">詳細を見る</v-btn>
               </v-card-text>
             </v-card>
           </v-col>

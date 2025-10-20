@@ -5,6 +5,8 @@ import TopPage from '@/views/TopPage.vue'
 import Theme from '@/components/Theme/index.vue'
 import Post from '@/components/Post/index.vue'
 import PostCreate from '@/components/Post/create.vue'
+import PostShow from '@/components/Post/show.vue'
+
 // ルート定義
 const routes = [
   { path: '/', name: 'TopPage', component: TopPage },
@@ -12,6 +14,7 @@ const routes = [
   { path: '/posts/:id', name: 'PostIndex', component: Post },
   { path: '/post/create/:themeId', name: 'PostCreate', component: PostCreate },
   { path: '/post/edit/:themeId/:postId', name: 'PostEdit', component: PostCreate },
+  { path: '/post/:postId', name: 'PostShow', component: PostShow },
 ]
 
 // Router インスタンスを作成

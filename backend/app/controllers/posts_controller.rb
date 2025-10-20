@@ -10,7 +10,8 @@ class PostsController < ApplicationController
 
   # GET /posts/1
   def show
-    render json: @post
+    theme = Theme.find(@post.theme_id)
+    render json: { post: @post, theme: theme }
   end
 
   # POST /posts
@@ -49,7 +50,7 @@ class PostsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
-      @post = Post.find(params[:id])
+      @post = Post.joins(:user).select('posts.*, users.name AS user_name').find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
