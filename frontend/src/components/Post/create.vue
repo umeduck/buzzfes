@@ -91,9 +91,8 @@ const getTheme = async () => {
   if (postId) {
     api.get(`http://localhost:3000/posts/${postId}`)
     .then(response => {
-      console.log(response.data)
-      title.value = response.data.title
-      content.value = response.data.content
+      title.value = response.data.post.title
+      content.value = response.data.post.content
     })
     .catch(error => {
       console.error("Error fetching themes:", error)
