@@ -24,7 +24,7 @@
               <p class="text-body-1">{{ post.content }}</p>
               <p class="my-6 text-right">投稿者: {{ post.user_name }}</p>
             </div>
-            <v-btn color="blue-darken-3" @click="test">投票する</v-btn>
+            <v-btn color="blue-darken-3" @click="submitVote">投票する</v-btn>
           </v-card-text>
         </v-card>
       </v-container>
@@ -35,6 +35,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import api from '@/plugins/axios'
+import { useNotificationStore } from '@/stores/notification'
 
 const route = useRoute()
 
@@ -43,11 +44,25 @@ const postId = route.params.postId
 const theme = ref()
 const post = ref()
 
+// お知らせアラート
+const notify = useNotificationStore()
+
 const getPost = async () => {
   api.get(`http://localhost:3000/posts/${postId}`)
   .then(response => {
     theme.value = response.data.theme
     post.value = response.data.post
+  })
+  .catch(error => {
+    console.error("Error fetching post:", error)
+  })
+}
+
+const submitVote = () => {
+  api.put((`http://localhost:3000/votes/${postId}`))
+  .then(response => {
+    console.log(response)
+  notify.notify('投票完了', 'success')
   })
   .catch(error => {
     console.error("Error fetching post:", error)

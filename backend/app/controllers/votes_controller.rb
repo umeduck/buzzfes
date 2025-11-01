@@ -16,8 +16,6 @@ class VotesController < ApplicationController
 
   # POST /votes
   def create
-    @vote = Vote.new(vote_params)
-
     if @vote.save
       render json: @vote, status: :created, location: @vote
     else
@@ -27,10 +25,22 @@ class VotesController < ApplicationController
 
   # PATCH/PUT /votes/1
   def update
-    if @vote.update(vote_params)
-      render json: @vote
+    AppLogger.info('fghasdujfi')
+    # 同じ投稿に対して投票をおこなっていないか
+    @post = Post.find(post_params[:postId])
+    # 同じ投稿に投票があった場合は更新(フロントであるかどうかを確認してユーザーに確認画面を表示させる)
+    # 同じ投稿に投票がない場合は新規登録
+    @vote = Vote.find_by(user_id: current_user.id, post_id: post_params[:postId])
+    if @vote
+      puts "ユーザーが見つかりました: #{user.name}"
+      if @vote.update(vote_params)
+        render json: @vote
+      else
+        render json: @vote.errors, status: :unprocessable_entity
+      end
     else
-      render json: @vote.errors, status: :unprocessable_entity
+      puts "ユーザーが見つかりませんでした"
+      @vote = Vote.new(vote_params)
     end
   end
 
