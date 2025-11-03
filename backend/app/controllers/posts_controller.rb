@@ -11,7 +11,18 @@ class PostsController < ApplicationController
   # GET /posts/1
   def show
     theme = Theme.find(@post.theme_id)
-    render json: { post: @post, theme: theme }
+    vote = Vote.find_by(user_id: current_user&.id, theme_id: @post.theme_id)
+    if vote.nil?
+      # 未投票
+      vote_status = 0
+    elsif vote.post_id == @post.id
+      # 投票済み
+      vote_status = 1
+    else
+      # 別の投稿に投票済み
+      vote_status = 2
+    end
+    render json: { post: @post, theme: theme, vote_status: vote_status }
   end
 
   # POST /posts
