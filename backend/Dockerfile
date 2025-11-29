@@ -13,4 +13,8 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
 COPY . .
+
+# entrypoint.shの改行コードを修正し、実行権限を付与
+RUN sed -i 's/\r$//' /app/entrypoint.sh && chmod +x /app/entrypoint.sh
+
 CMD ["rails", "server", "-b", "0.0.0.0"]
